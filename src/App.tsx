@@ -247,7 +247,7 @@ function App() {
           }}
         />
         <Snippet
-          apiName="liff.shareTargetPicker (Single)"
+          apiName="liff.shareTargetPicker (Single Target)"
           version="2.0"
           docUrl="https://developers.line.biz/en/reference/liff/#share-target-picker"
           needRequestPayload={true}
@@ -265,7 +265,7 @@ function App() {
           loginRequired={true}
         />
         <Snippet
-          apiName="liff.shareTargetPicker (Multiple"
+          apiName="liff.shareTargetPicker (Multiple Target)"
           version="2.0"
           docUrl="https://developers.line.biz/en/reference/liff/#share-target-picker"
           needRequestPayload={true}
