@@ -4,7 +4,10 @@ import styles from './App.module.css'
 import Header from './components/Header'
 import Snippet from './components/Snippet'
 import Input from './components/Input'
-import { SHARE_TARGET_PICKER_FIXED_ARGUMENT_LIST, QR_IMG_MAP } from './constants'
+import {
+  SHARE_TARGET_PICKER_FIXED_ARGUMENT_LIST,
+  QR_IMG_MAP,
+} from './constants'
 import { FilterTypes } from './FilterTypes'
 import { AppContext } from './Context'
 
@@ -33,7 +36,11 @@ function App() {
           <div className={styles.liffIdBox}>
             <Input readonly value={`URL: ${appUrl}`} />
           </div>
-          <img src={QR_IMG_MAP[filter]} className={styles.qrCode} />
+          <img
+            src={QR_IMG_MAP[filter]}
+            className={styles.qrCode}
+            alt="QR_IMG_MAP"
+          />
         </div>
         <h1>Client APIs</h1>
         {!isLoggedIn ? (
@@ -142,7 +149,7 @@ function App() {
           useTextareaForResponse={true}
           docUrl="https://developers.line.biz/en/reference/liff/#get-decoded-id-token"
           runner={async () => {
-            return JSON.stringify(await liff.getDecodedIDToken(), null, 4)
+            return JSON.stringify(liff.getDecodedIDToken(), null, 4)
           }}
         />
         <Snippet
@@ -151,7 +158,7 @@ function App() {
           docUrl="https://developers.line.biz/en/reference/liff/#get-context"
           useTextareaForResponse={true}
           runner={async () => {
-            return JSON.stringify(await liff.getContext(), null, 4)
+            return JSON.stringify(liff.getContext(), null, 4)
           }}
         />
         <Snippet
@@ -236,11 +243,11 @@ function App() {
           skipAutoRun={true}
           hideResponse={true}
           runner={async (options) => {
-            return await liff.openWindow(JSON.parse(options))
+            return liff.openWindow(JSON.parse(options))
           }}
         />
         <Snippet
-          apiName="liff.shareTargetPicker"
+          apiName="liff.shareTargetPicker (Single)"
           version="2.0"
           docUrl="https://developers.line.biz/en/reference/liff/#share-target-picker"
           needRequestPayload={true}
@@ -251,7 +258,27 @@ function App() {
           pulldownOptions={SHARE_TARGET_PICKER_FIXED_ARGUMENT_LIST}
           skipAutoRun={true}
           runner={async (options) => {
-            return await liff.shareTargetPicker([JSON.parse(options)])
+            return await liff.shareTargetPicker([JSON.parse(options)], {
+              isMultiple: false,
+            })
+          }}
+          loginRequired={true}
+        />
+        <Snippet
+          apiName="liff.shareTargetPicker (Multiple"
+          version="2.0"
+          docUrl="https://developers.line.biz/en/reference/liff/#share-target-picker"
+          needRequestPayload={true}
+          hideResponse={true}
+          defaultRequestPayload={
+            SHARE_TARGET_PICKER_FIXED_ARGUMENT_LIST[0].value
+          }
+          pulldownOptions={SHARE_TARGET_PICKER_FIXED_ARGUMENT_LIST}
+          skipAutoRun={true}
+          runner={async (options) => {
+            return await liff.shareTargetPicker([JSON.parse(options)], {
+              isMultiple: false,
+            })
           }}
           loginRequired={true}
         />
@@ -276,7 +303,7 @@ function App() {
           skipAutoRun={true}
           hideResponse={true}
           runner={async () => {
-            return await liff.closeWindow()
+            return liff.closeWindow()
           }}
         />
         <Snippet
